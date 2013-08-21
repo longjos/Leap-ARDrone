@@ -1,3 +1,7 @@
+atlassian-ide-plugin.xml
+out/
+lib/
+.idea
 *.class
 *.log
 
