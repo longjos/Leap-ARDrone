@@ -32,6 +32,8 @@ This is an early version. It's probably buggy, fly at your own risk.
 * Roll Right - Tile open hand right
 * Yaw Left - Rotate your hand counter-clockwise with palm down
 * Yaw Right - Rotate your hand clockwise with palm down
+* Increase Elevation - Move right hand up
+* Decrease Elevation - Move right hand down
 
 
 ## Requirements
