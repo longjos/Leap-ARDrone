@@ -22,6 +22,7 @@ object ScalaDrone extends App {
 
   System.in.read()
   controller.removeListener(DroneListener)
+  DroneListener.droneController.land()
   println("Disconnected")
 }
 
@@ -46,6 +47,7 @@ object DroneListener extends Listener {
   override def onInit(controller: Controller) = {
     println("Initialized")
   }
+
 
   override def onFrame(controller: Controller) = {
     if (controller.frame.hands.count > 1) {
