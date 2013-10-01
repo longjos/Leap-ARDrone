@@ -25,8 +25,8 @@ object ScalaDrone extends App {
   println("Disconnected")
 }
 
-class VideoListener(hud: HUD) extends util.BufferedImageVideoListener {
-  override def imageReceived(img: BufferedImage) = {
+class VideoListener(hud: HUD) extends com.nashsoftware.ardrone2.video.DroneVideoListener {
+  override def frameReceived(img: BufferedImage) = {
     hud.updateVideoFrame(img)
   }
 }
@@ -206,11 +206,11 @@ class HUD {
   var roll: Double = 0
   var yaw: Double = 0
   var gaz: Double = 0
-  var bufferedFrame: BufferedImage = null
+  var bufferedFrame: BufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB)
 
   def updateVideoFrame(videoFrame: BufferedImage) = {
     bufferedFrame = videoFrame
-    drawHUD(bufferedFrame)
+    drawHUD(copyBuffer(bufferedFrame))
   }
 
   def drawHUD(videoFrame: BufferedImage) = {
@@ -232,7 +232,11 @@ class HUD {
     roll = _roll
     yaw = _yaw
     gaz = _gaz
-    drawHUD(bufferedFrame)
+    drawHUD(copyBuffer(bufferedFrame))
+  }
+
+  def copyBuffer(frame: BufferedImage): BufferedImage = {
+    new BufferedImage(frame.getColorModel, frame.copyData(null), frame.getColorModel.isAlphaPremultiplied, null)
   }
 
 }

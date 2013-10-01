@@ -1,7 +1,7 @@
 package com.nashsoftware.Controller
 
 import com.nashsoftware.ardrone2.ARDrone2
-import com.nashsoftware.VideoListener
+import com.nashsoftware.ardrone2.video.DroneVideoListener
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,28 +26,29 @@ class NetworkController(drone: ARDrone2) extends BaseController {
 
   var controlStatus: ControlStatus = new ControlStatus(0,0,0,0)
 
-  def addImageListener(imageListener: VideoListener) = {
+  def addImageListener(imageListener: DroneVideoListener) = {
     drone.addImageListener(imageListener)
   }
+
   def land() = {
     if (state != DroneState.LANDED) {
       println("Land")
-      drone.land()
       state = DroneState.LANDED
+      drone.land()
     }
   }
 
   def takeOff() = {
-    if (state != DroneState.HOVERING || state != DroneState.FLYING) {
+    if (state != DroneState.LAUNCHING) {
       println("Take Off")
+      state = DroneState.LAUNCHING
       drone.takeOff()
-      state = DroneState.HOVERING
     }
   }
 
   def move(pitch: Float, roll: Float, gaz: Float, yaw: Float) = {
     if (state == DroneState.HOVERING) {
-      state =DroneState.FLYING
+      state = DroneState.FLYING
     }
     if (state == DroneState.FLYING) {
       controlStatus = new ControlStatus(pitch, roll, yaw, gaz)
